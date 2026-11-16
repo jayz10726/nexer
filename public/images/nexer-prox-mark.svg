@@ -1,0 +1,12 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="nexerGradient" x1="24" y1="24" x2="176" y2="176" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00E5FF"/>
+      <stop offset="0.45" stop-color="#00A9FF"/>
+      <stop offset="1" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="42" fill="#061B2A"/>
+  <path d="M52 148V52H83L115 102V52H148V148H117L85 98V148H52Z" fill="url(#nexerGradient)"/>
+  <path d="M118 80H146C163.673 80 178 94.3269 178 112C178 129.673 163.673 144 146 144H118V80ZM146 122C153.732 122 160 115.732 160 108C160 100.268 153.732 94 146 94H138V122H146Z" fill="white" fill-opacity="0.92"/>
+</svg>
