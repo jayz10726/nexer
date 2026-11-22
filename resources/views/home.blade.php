@@ -30,9 +30,9 @@
                 <span class="inline-flex items-center gap-2"><span class="home-check">✓</span> No long-term contracts</span>
             </div>
             <dl class="mt-12 grid max-w-lg grid-cols-3 gap-5 border-t border-white/10 pt-6">
-                <div><dt class="text-2xl font-extrabold text-white sm:text-3xl">150<span class="text-cyan-300">+</span></dt><dd class="mt-1 text-xs text-slate-400 sm:text-sm">Countries</dd></div>
-                <div><dt class="text-2xl font-extrabold text-white sm:text-3xl">99.9<span class="text-cyan-300">%</span></dt><dd class="mt-1 text-xs text-slate-400 sm:text-sm">Uptime</dd></div>
-                <div><dt class="text-2xl font-extrabold text-white sm:text-3xl">24<span class="text-cyan-300">/7</span></dt><dd class="mt-1 text-xs text-slate-400 sm:text-sm">Support</dd></div>
+                <div><dt class="text-xl font-extrabold text-white sm:text-3xl">150<span class="text-cyan-300">+</span></dt><dd class="mt-1 text-xs text-slate-400 sm:text-sm">Countries</dd></div>
+                <div><dt class="text-xl font-extrabold text-white sm:text-3xl">99.9<span class="text-cyan-300">%</span></dt><dd class="mt-1 text-xs text-slate-400 sm:text-sm">Uptime</dd></div>
+                <div><dt class="text-xl font-extrabold text-white sm:text-3xl">24<span class="text-cyan-300">/7</span></dt><dd class="mt-1 text-xs text-slate-400 sm:text-sm">Support</dd></div>
             </dl>
         </div>
 
@@ -176,16 +176,16 @@
             </ul>
             <a href="{{ route('proxies') }}" class="mt-8 inline-block font-semibold text-brand-600 hover:text-brand-700">Explore Proxies →</a>
         </div>
-        <div class="feature-visual feature-visual-proxy aspect-video overflow-hidden rounded-2xl p-6 sm:p-8">
+        <div class="feature-visual feature-visual-proxy aspect-video overflow-hidden rounded-2xl p-4 sm:p-8">
             <div class="feature-visual-content flex h-full flex-col justify-between">
                 <div class="flex items-center justify-between text-white">
                     <span class="text-sm font-semibold tracking-wide">LIVE NETWORK</span>
                     <span class="flex items-center gap-2 text-xs text-white/80"><span class="h-2 w-2 rounded-full bg-emerald-300"></span>Operational</span>
                 </div>
                 <div class="grid grid-cols-3 gap-3 text-white">
-                    <div class="rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm"><p class="text-xs text-white/70">Regions</p><p class="mt-1 text-xl font-bold">150+</p></div>
-                    <div class="rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm"><p class="text-xs text-white/70">Latency</p><p class="mt-1 text-xl font-bold">&lt;60ms</p></div>
-                    <div class="rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm"><p class="text-xs text-white/70">Uptime</p><p class="mt-1 text-xl font-bold">99.9%</p></div>
+                    <div class="rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm"><p class="text-xs text-white/70">Regions</p><p class="mt-1 text-lg font-bold sm:text-xl">150+</p></div>
+                    <div class="rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm"><p class="text-xs text-white/70">Latency</p><p class="mt-1 text-lg font-bold sm:text-xl">&lt;60ms</p></div>
+                    <div class="rounded-xl border border-white/20 bg-white/10 p-3 backdrop-blur-sm"><p class="text-xs text-white/70">Uptime</p><p class="mt-1 text-lg font-bold sm:text-xl">99.9%</p></div>
                 </div>
             </div>
         </div>
@@ -195,7 +195,7 @@
 {{-- Virtual numbers feature block --}}
 <section>
     <div class="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:px-8">
-        <div class="feature-visual feature-visual-number number-demo-visual order-2 aspect-video overflow-hidden rounded-2xl p-6 sm:p-8 lg:order-1">
+        <div class="feature-visual feature-visual-number number-demo-visual order-2 aspect-video overflow-hidden rounded-2xl p-4 sm:p-8 lg:order-1">
             <div class="feature-visual-content flex h-full flex-col justify-between">
                 <div class="flex items-center justify-between text-white">
                     <span class="text-sm font-semibold tracking-wide">YOUR NUMBER</span>

@@ -67,34 +67,34 @@
         </aside>
 
         {{-- Main content --}}
-        <div class="flex-1">
+        <div class="min-w-0 flex-1">
             <div class="border-b border-gray-200 bg-white lg:hidden" x-data="{ menuOpen: false }">
-                <header class="flex items-center justify-between px-6 py-4">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-lg font-bold">
-                        <img src="{{ asset('images/nexer-prox-mark.svg') }}" alt="NEXER PROX logo" class="h-8 w-8 rounded-lg object-cover ring-1 ring-brand-200">
-                        <span class="tracking-tight">{{ $siteName }}</span>
+                <header class="flex items-center justify-between gap-3 px-4 py-4 sm:px-6">
+                    <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-2 text-lg font-bold">
+                        <img src="{{ asset('images/nexer-prox-mark.svg') }}" alt="NEXER PROX logo" class="h-8 w-8 shrink-0 rounded-lg object-cover ring-1 ring-brand-200">
+                        <span class="truncate tracking-tight">{{ $siteName }}</span>
                     </a>
-                    <button type="button" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen.toString()" aria-controls="dashboard-mobile-menu" class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-ink-900">
+                    <button type="button" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen.toString()" aria-controls="dashboard-mobile-menu" class="h-11 shrink-0 rounded-lg border border-gray-200 px-4 text-sm font-semibold text-ink-900">
                         <span x-text="menuOpen ? 'Close menu' : 'Menu'"></span>
                     </button>
                 </header>
                 <nav id="dashboard-mobile-menu" x-show="menuOpen" x-cloak class="space-y-1 border-t border-gray-100 px-4 py-3">
                     @foreach ($navItems as $item)
-                        <a href="{{ route($item['route']) }}" class="block rounded-lg px-3 py-2 text-sm font-medium {{ request()->routeIs($item['match']) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">
+                        <a href="{{ route($item['route']) }}" class="block rounded-lg px-3 py-3 text-sm font-medium {{ request()->routeIs($item['match']) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">
                             {{ $item['label'] }}
                         </a>
                     @endforeach
                     @if (Auth::user()->isAdmin())
-                        <a href="{{ route('admin') }}" class="block rounded-lg px-3 py-2 text-sm font-semibold text-brand-700">Admin Panel</a>
+                        <a href="{{ route('admin') }}" class="block rounded-lg px-3 py-3 text-sm font-semibold text-brand-700">Admin Panel</a>
                     @endif
                     <form method="POST" action="{{ route('logout') }}" class="pt-2">
                         @csrf
-                        <button type="submit" class="w-full rounded-lg border border-gray-200 px-3 py-2 text-left text-sm font-semibold text-gray-700">Log out</button>
+                        <button type="submit" class="w-full rounded-lg border border-gray-200 px-3 py-3 text-left text-sm font-semibold text-gray-700">Log out</button>
                     </form>
                 </nav>
             </div>
 
-            <main class="dashboard-main p-6 lg:p-10">
+            <main class="dashboard-main p-4 sm:p-6 lg:p-10">
                 @if (session('status'))
                     <div class="mb-6 rounded-lg bg-forest-50 p-4 text-sm text-forest-700">{{ session('status') }}</div>
                 @endif

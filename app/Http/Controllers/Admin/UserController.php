@@ -38,23 +38,28 @@ class UserController extends Controller
     }
 
     /**
-     * Update a user's role and account status. Only a super admin can grant
-     * or revoke admin/super_admin roles; regular admins can only manage
-     * plain "user" accounts' status.
+     * Update a user's role and account status. Only a privileged administrator
+     * can grant or revoke administrator roles.
      */
     public function update(Request $request, User $user): RedirectResponse
     {
+        if ($user->isAdmin() && ! $request->user()->isSuperAdmin()) {
+            abort(404);
+        }
+
         $validated = $request->validate([
             'role' => ['required', Rule::in(['user', 'admin', 'super_admin'])],
             'status' => ['required', Rule::in(['active', 'suspended'])],
         ]);
 
         if (! $request->user()->isSuperAdmin() && $validated['role'] !== $user->role) {
-            abort(403, 'Only the super admin can change user roles.');
+            abort(404);
         }
 
-        if ($user->id === $request->user()->id && $validated['role'] !== 'super_admin') {
-            abort(403, 'You cannot remove your own super admin role.');
+        if ($user->id === $request->user()->id
+            && $request->user()->isSuperAdmin()
+            && $validated['role'] !== 'super_admin') {
+            abort(404);
         }
 
         $user->update($validated);
@@ -64,6 +69,10 @@ class UserController extends Controller
 
     public function adjustWallet(Request $request, User $user): RedirectResponse
     {
+        if ($user->isAdmin() && ! $request->user()->isSuperAdmin()) {
+            abort(404);
+        }
+
         $validated = $request->validate([
             'amount' => ['required', 'numeric', 'min:-100000', 'max:100000', 'not_in:0'],
             'note' => ['nullable', 'string', 'max:255'],

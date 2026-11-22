@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LoginActivityController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\ProxyController;
 use App\Http\Controllers\Admin\SettingsController;
@@ -45,4 +46,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin')->group(func
     Route::delete('/virtual-numbers/{number}', [VirtualNumberController::class, 'destroy'])->name('.numbers.destroy');
 
     Route::get('/transactions', [TransactionController::class, 'index'])->name('.transactions');
+
+    Route::get('/login-activity', [LoginActivityController::class, 'index'])
+        ->middleware('super_admin')
+        ->name('.login-activity');
 });

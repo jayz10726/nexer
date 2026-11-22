@@ -11,7 +11,7 @@ class EnsureUserIsSuperAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (! $request->user() || ! $request->user()->isSuperAdmin()) {
-            abort(403, 'Only the super admin can perform this action.');
+            abort(404);
         }
 
         return $next($request);

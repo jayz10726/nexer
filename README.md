@@ -14,15 +14,22 @@ A Laravel 11 + Tailwind CSS marketing site for a proxies & virtual numbers busin
 
 ## Setting up "Continue with Google"
 
-1. Go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials), create (or reuse) a project, and create an **OAuth 2.0 Client ID** (type: Web application).
-2. Add an authorized redirect URI: `http://localhost:8000/auth/google/callback` (adjust host/port for your setup, or your production domain later).
-3. Copy the generated **Client ID** and **Client Secret** into your `.env`:
+1. In [Google Cloud Console](https://console.cloud.google.com/apis/credentials), create an **OAuth 2.0 Client ID** of type **Web application**.
+2. Add the origin users visit to **Authorized JavaScript origins** (for production, `https://nexerprox.co.ke`).
+3. Add the exact callback URL to **Authorized redirect URIs**. For production, use `https://nexerprox.co.ke/auth/google/callback`; for local Apache on port 80, use `http://localhost/auth/google/callback`. A local `php artisan serve` on port 8000 instead needs `http://localhost:8000/auth/google/callback`.
+4. On the server running the app, set these values in its `.env`:
    ```
+   APP_URL=https://nexerprox.co.ke
    GOOGLE_CLIENT_ID=your-client-id
    GOOGLE_CLIENT_SECRET=your-client-secret
-   GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+   GOOGLE_REDIRECT_URI=https://nexerprox.co.ke/auth/google/callback
    ```
-4. That's it — the "Continue with Google" button on `/login` and `/register` will start working once `composer install` has pulled in `laravel/socialite`.
+   Keep the client secret only in the server environment; do not commit it.
+5. Deploy the application and its migrations, then run `php artisan migrate --force` and rebuild Laravel's cached configuration with `php artisan config:clear && php artisan config:cache`. Ensure Apache's document root is the Laravel `public` directory and rewrite rules are enabled.
+
+The "Continue with Google" button on `/login` and `/register` redirects to Google when the server has both OAuth credentials configured.
+
+Google callback handling validates OAuth state and only accepts verified Google email addresses. If an account already exists for that email, sign in with that account first and connect Google from **Dashboard → Settings**; accounts are not automatically linked based on email alone.
 
 New users signing up via Google (or email) get seeded with a small demo wallet bonus, one sample proxy, and one sample virtual number so the dashboard isn't empty on first login — see `app/Support/DemoDataSeeder.php`. Remove or replace this once you wire up real provisioning.
 
@@ -50,17 +57,19 @@ Once logged in, users land on `/dashboard` with a sidebar:
 
 On the wallet page, users choose a Paystack channel: Card, Bank account, Apple Pay, USSD, QR code, Mobile money, or Bank transfer. The wallet then redirects them to Paystack's secure hosted checkout, where Paystack collects the card or bank details and PIN when required. Sensitive payment details never pass through this app. Availability depends on the currency, country, device, and payment methods enabled for your Paystack account. Funds are credited only after the server verifies a successful transaction with Paystack.
 
+Each top-up now has a server-stored intent bound to its initiating user, wallet amount, gateway amount, currency, and unique reference. The verified callback credits it atomically at most once. During deployment, let any payments already in progress finish before switching to this version, or reconcile them manually with Paystack before crediting wallets.
+
 ## The super admin panel
 
-Your account is created automatically the first time you seed the database, using the `SUPER_ADMIN_*` values in `.env`:
+The initial privileged account is created during the first database seed. Set these values privately in `.env` first:
 
 ```
 SUPER_ADMIN_NAME="Super Admin"
-SUPER_ADMIN_EMAIL=admin@relantis.test
-SUPER_ADMIN_PASSWORD=ChangeThisPassword123!
+SUPER_ADMIN_EMAIL=
+SUPER_ADMIN_PASSWORD=
 ```
 
-**Change `SUPER_ADMIN_PASSWORD` before you run the seeder for real** — the value above is just a placeholder. After `php artisan migrate --seed`, log in at `/login` with those credentials and you'll see an **"Admin Panel →"** link at the bottom of your dashboard sidebar.
+Use your deployment account's email and a unique password with at least 16 characters; generate and store it in a password manager. The example intentionally contains no working credentials. The seeder refuses missing or known placeholder passwords, creates the account only if the email is unused, and never resets an existing account's password or role. If the email already belongs to a regular account, the seeder stops rather than elevating it. After setup, sign in at `/login`; authorized accounts see the admin link in their dashboard.
 
 The admin panel at `/admin` lets you:
 
@@ -70,6 +79,10 @@ The admin panel at `/admin` lets you:
 - **Transactions** (`/admin/transactions`) — the full platform-wide wallet ledger, filterable by type
 
 Access is enforced by two middleware: `admin` (role `admin` or `super_admin`) guards the whole `/admin` area, and `super_admin` additionally guards role changes and account deletion. A suspended account is blocked from logging in (both password and Google login) until an admin reactivates it.
+
+Super admins can also open `/admin/login-activity` to review successful password/Google sign-ins and currently active sessions. Sign-in history starts when this feature is deployed; it does not backfill older logins. Active session visibility requires `SESSION_DRIVER=database`.
+
+Password sign-in is limited to five attempts per minute per email/IP pair and 120 attempts per minute per IP. For multiple application servers, use a shared production cache backend so throttling is consistent across instances.
 
 To promote an existing regular user to `admin` later, either use the super admin panel (`/admin/users/{id}` → change Role to Admin) or run:
 ```bash
@@ -101,7 +114,9 @@ php artisan key:generate
 
 The project defaults to **SQLite** (already configured, `database/database.sqlite` is included as an empty file). If you'd rather use MySQL/Postgres, edit the `DB_*` values in `.env`.
 
-### 4. Run migrations and seed the pricing plans
+### 4. Configure the initial privileged account, then migrate and seed
+Set a unique `SUPER_ADMIN_EMAIL` and strong `SUPER_ADMIN_PASSWORD` in `.env` before running the seeder, as described above.
+
 ```bash
 php artisan migrate --seed
 ```
@@ -118,6 +133,21 @@ npm run build
 php artisan serve
 ```
 Visit `http://127.0.0.1:8000`.
+
+### Production deployment checklist
+
+Do not deploy the local `.env.example` values as-is. On the production host configure `APP_ENV=production`, `APP_DEBUG=false`, an HTTPS `APP_URL`, a unique `APP_KEY`, production database credentials, and `SESSION_SECURE_COOKIE=true`. Use a production database and a shared session/cache backend for multiple app instances. Keep OAuth and Paystack secrets only in the host's secret environment, set Google's exact HTTPS callback URL, and use Paystack live keys only after completing a live-mode verification.
+
+Deploy code and built assets, then run:
+
+```bash
+php artisan migrate --force
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+Confirm HTTPS is enforced at the proxy/web server, the web root points only to `public/`, and backups, monitoring, queue workers, and scheduled tasks are configured before accepting customers.
 
 ## Project structure notes
 

@@ -3,9 +3,9 @@
 @section('title', 'Virtual Numbers — Admin')
 
 @section('content')
-<div class="flex items-center justify-between">
+<div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
     <h1 class="text-2xl font-bold text-ink-900">All Virtual Numbers</h1>
-    <a href="{{ route('admin.numbers.create') }}" class="btn-primary">Assign Number</a>
+    <a href="{{ route('admin.numbers.create') }}" class="btn-primary shrink-0">Assign Number</a>
 </div>
 
 <div class="mt-6 overflow-x-auto rounded-xl border border-gray-100 bg-white">

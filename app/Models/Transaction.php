@@ -13,6 +13,7 @@ class Transaction extends Model
         'balance_after',
         'description',
         'status',
+        'gateway_reference',
     ];
 
     protected $casts = [

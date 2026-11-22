@@ -4,12 +4,12 @@
 
 @section('content')
 <div x-data="numberBuyer()" x-init="init()">
-    <div class="flex items-center justify-between">
+    <div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <h1 class="text-2xl font-bold text-ink-900">Buy a Virtual Number</h1>
             <p class="mt-1 text-sm text-gray-600">Three quick picks and you're done — country, service, then purchase.</p>
         </div>
-        <a href="{{ route('dashboard.numbers') }}" class="btn-secondary">← My Numbers</a>
+        <a href="{{ route('dashboard.numbers') }}" class="btn-secondary shrink-0">← My Numbers</a>
     </div>
 
     {{-- Progress bar --}}
@@ -54,7 +54,7 @@
 
     {{-- Step 2: Country --}}
     <div class="mt-6" x-show="step === 2" x-cloak>
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500">Step 2 — Choose a Country in <span x-text="continent"></span></h2>
             <button type="button" @click="goToStep(1)" class="text-xs font-semibold text-brand-600">← Back</button>
         </div>
@@ -82,7 +82,7 @@
 
     {{-- Step 3: Service --}}
     <div class="mt-6 space-y-8" x-show="step === 3" x-cloak>
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500">Step 3 — Choose a Service</h2>
             <button type="button" @click="goToStep(2)" class="text-xs font-semibold text-brand-600">← Back</button>
         </div>
@@ -112,7 +112,7 @@
 
     {{-- Step 4: Purchase --}}
     <div class="mt-6 max-w-xl" x-show="step === 4" x-cloak>
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
             <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500">Step 4 — Confirm &amp; Purchase</h2>
             <button type="button" @click="goToStep(3)" class="text-xs font-semibold text-brand-600">← Back</button>
         </div>

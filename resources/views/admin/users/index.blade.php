@@ -7,7 +7,7 @@
 
 <form method="GET" class="mt-6 flex flex-wrap gap-3">
     <input type="text" name="search" value="{{ request('search') }}" placeholder="Search name or email..."
-        class="w-64 rounded-lg border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500">
+        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500 sm:w-64">
     <select name="role" class="rounded-lg border-gray-300 shadow-sm focus:border-brand-500 focus:ring-brand-500">
         <option value="">All roles</option>
         <option value="user" @selected(request('role') === 'user')>User</option>

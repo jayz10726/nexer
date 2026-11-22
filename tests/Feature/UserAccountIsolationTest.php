@@ -227,6 +227,6 @@ class UserAccountIsolationTest extends TestCase
         $this->get(route('pricing'))->assertOk()->assertSee('Team');
 
         $user = User::factory()->create();
-        $this->actingAs($user)->get(route('admin.settings'))->assertForbidden();
+        $this->actingAs($user)->get(route('admin.settings'))->assertNotFound();
     }
 }

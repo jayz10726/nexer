@@ -3,12 +3,12 @@
 @section('title', $user->name.' — Admin')
 
 @section('content')
-<div class="flex items-center justify-between">
-    <div>
+<div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div class="min-w-0">
         <h1 class="text-2xl font-bold text-ink-900">{{ $user->name }}</h1>
-        <p class="text-sm text-gray-600">{{ $user->email }} · Joined {{ $user->created_at->format('M j, Y') }}</p>
+        <p class="break-all text-sm text-gray-600">{{ $user->email }} · Joined {{ $user->created_at->format('M j, Y') }}</p>
     </div>
-    <a href="{{ route('admin.users') }}" class="btn-secondary">← Back to Users</a>
+    <a href="{{ route('admin.users') }}" class="btn-secondary shrink-0">← Back to Users</a>
 </div>
 
 <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -87,12 +87,12 @@
     <h2 class="text-lg font-semibold text-ink-900">Recent Transactions</h2>
     <div class="mt-4 overflow-hidden rounded-xl border border-gray-100 bg-white">
         @forelse ($transactions as $transaction)
-            <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4 last:border-0">
-                <div>
-                    <p class="text-sm font-medium text-ink-900">{{ $transaction->description ?? ucfirst($transaction->type) }}</p>
+            <div class="flex items-center justify-between gap-4 border-b border-gray-100 px-5 py-4 last:border-0">
+                <div class="min-w-0">
+                    <p class="break-words text-sm font-medium text-ink-900">{{ $transaction->description ?? ucfirst($transaction->type) }}</p>
                     <p class="text-xs text-gray-500">{{ $transaction->created_at->format('M j, Y · g:i A') }}</p>
                 </div>
-                <span class="text-sm font-semibold {{ in_array($transaction->type, ['topup', 'bonus', 'admin_credit']) ? 'text-forest-600' : 'text-gray-700' }}">
+                <span class="shrink-0 text-sm font-semibold {{ in_array($transaction->type, ['topup', 'bonus', 'admin_credit']) ? 'text-forest-600' : 'text-gray-700' }}">
                     {{ in_array($transaction->type, ['topup', 'bonus', 'admin_credit']) ? '+' : '-' }}${{ number_format($transaction->amount, 2) }}
                 </span>
             </div>

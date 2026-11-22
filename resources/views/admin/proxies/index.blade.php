@@ -3,9 +3,9 @@
 @section('title', 'Proxies — Admin')
 
 @section('content')
-<div class="flex items-center justify-between">
+<div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
     <h1 class="text-2xl font-bold text-ink-900">All Proxies</h1>
-    <a href="{{ route('admin.proxies.create') }}" class="btn-primary">Assign Proxy</a>
+    <a href="{{ route('admin.proxies.create') }}" class="btn-primary shrink-0">Assign Proxy</a>
 </div>
 
 <div class="mt-6 overflow-x-auto rounded-xl border border-gray-100 bg-white">

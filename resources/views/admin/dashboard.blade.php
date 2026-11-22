@@ -37,12 +37,12 @@
         </div>
         <div class="mt-4 overflow-hidden rounded-xl border border-gray-100 bg-white">
             @forelse ($recentUsers as $user)
-                <a href="{{ route('admin.users.show', $user) }}" class="flex items-center justify-between border-b border-gray-100 px-5 py-4 last:border-0 hover:bg-gray-50">
-                    <div>
+                <a href="{{ route('admin.users.show', $user) }}" class="flex items-center justify-between gap-4 border-b border-gray-100 px-5 py-4 last:border-0 hover:bg-gray-50">
+                    <div class="min-w-0">
                         <p class="text-sm font-medium text-ink-900">{{ $user->name }}</p>
-                        <p class="text-xs text-gray-500">{{ $user->email }}</p>
+                        <p class="break-all text-xs text-gray-500">{{ $user->email }}</p>
                     </div>
-                    <span class="rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold capitalize text-gray-600">{{ str_replace('_', ' ', $user->role) }}</span>
+                    <span class="shrink-0 rounded-full bg-gray-100 px-2 py-1 text-xs font-semibold capitalize text-gray-600">{{ str_replace('_', ' ', $user->role) }}</span>
                 </a>
             @empty
                 <p class="px-5 py-6 text-center text-sm text-gray-500">No users yet.</p>
@@ -57,12 +57,12 @@
         </div>
         <div class="mt-4 overflow-hidden rounded-xl border border-gray-100 bg-white">
             @forelse ($recentTransactions as $transaction)
-                <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4 last:border-0">
-                    <div>
+                <div class="flex items-center justify-between gap-4 border-b border-gray-100 px-5 py-4 last:border-0">
+                    <div class="min-w-0">
                         <p class="text-sm font-medium text-ink-900">{{ $transaction->user->name ?? 'Deleted user' }}</p>
-                        <p class="text-xs text-gray-500">{{ $transaction->description ?? ucfirst($transaction->type) }}</p>
+                        <p class="break-words text-xs text-gray-500">{{ $transaction->description ?? ucfirst($transaction->type) }}</p>
                     </div>
-                    <span class="text-sm font-semibold {{ in_array($transaction->type, ['topup', 'bonus', 'admin_credit']) ? 'text-forest-600' : 'text-gray-700' }}">
+                    <span class="shrink-0 text-sm font-semibold {{ in_array($transaction->type, ['topup', 'bonus', 'admin_credit']) ? 'text-forest-600' : 'text-gray-700' }}">
                         {{ in_array($transaction->type, ['topup', 'bonus', 'admin_credit']) ? '+' : '-' }}${{ number_format($transaction->amount, 2) }}
                     </span>
                 </div>

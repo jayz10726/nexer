@@ -315,6 +315,17 @@
     color: #4ade80;
 }
 
+@media (max-width: 639px) {
+    .home-network-tag {
+        display: none;
+    }
+
+    .home-network-label {
+        gap: 0.5rem;
+        padding: 0.55rem 0.65rem;
+    }
+}
+
 .home-motion-ready .home-reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -750,6 +761,7 @@
 
     .btn-primary {
         @apply inline-flex items-center justify-center rounded-lg px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2;
+        min-height: 2.75rem;
         background-image: linear-gradient(135deg, #00BFFF 0%, #6F2DA8 100%);
         box-shadow: 0 4px 14px 0 rgba(0, 191, 255, 0.25);
     }
@@ -759,6 +771,7 @@
     }
     .btn-secondary {
         @apply inline-flex items-center justify-center rounded-lg border border-brand-200 bg-white px-5 py-2.5 text-sm font-semibold text-ink-900 shadow-sm transition hover:border-brand-400 hover:bg-brand-50 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2;
+        min-height: 2.75rem;
     }
     .section-eyebrow {
         @apply text-sm font-semibold uppercase tracking-wide text-brand-600;

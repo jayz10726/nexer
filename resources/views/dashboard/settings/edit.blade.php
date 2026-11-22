@@ -50,4 +50,19 @@
         <button type="submit" class="btn-primary">Save Changes</button>
     </form>
 </div>
+
+<section class="mt-6 max-w-xl card">
+    <h2 class="text-lg font-semibold text-ink-900">Google sign-in</h2>
+    @if ($user->isSuperAdmin())
+        <p class="mt-2 text-sm text-gray-600">Google sign-in is unavailable for this account.</p>
+    @elseif ($user->google_id)
+        <p class="mt-2 text-sm text-forest-700">A Google account is connected to this account.</p>
+    @else
+        <p class="mt-2 text-sm text-gray-600">Connect the Google account that uses your verified email address.</p>
+        <form method="POST" action="{{ route('auth.google.link') }}" class="mt-4">
+            @csrf
+            <button type="submit" class="btn-secondary">Connect Google account</button>
+        </form>
+    @endif
+</section>
 @endsection

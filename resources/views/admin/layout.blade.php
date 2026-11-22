@@ -29,6 +29,9 @@
                     ['route' => 'admin.numbers', 'label' => 'Virtual Numbers', 'match' => 'admin.numbers*'],
                     ['route' => 'admin.transactions', 'label' => 'Transactions', 'match' => 'admin.transactions*'],
                 ];
+                if (Auth::user()->isSuperAdmin()) {
+                    $navItems[] = ['route' => 'admin.login-activity', 'label' => 'Login Activity', 'match' => 'admin.login-activity*'];
+                }
             @endphp
             <nav class="flex-1 space-y-1 px-3 py-4">
                 @foreach ($navItems as $item)
@@ -52,29 +55,29 @@
             </div>
         </aside>
 
-        <div class="flex-1">
+        <div class="min-w-0 flex-1">
             <div class="border-b border-gray-200 bg-white lg:hidden" x-data="{ menuOpen: false }">
-                <header class="flex items-center justify-between px-6 py-4">
+                <header class="flex items-center justify-between px-4 py-4 sm:px-6">
                     <a href="{{ route('admin') }}" class="text-lg font-bold">Admin Panel</a>
-                    <button type="button" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen.toString()" aria-controls="admin-mobile-menu" class="rounded-lg border border-gray-200 px-3 py-2 text-sm font-semibold text-ink-900">
+                    <button type="button" @click="menuOpen = !menuOpen" :aria-expanded="menuOpen.toString()" aria-controls="admin-mobile-menu" class="h-11 rounded-lg border border-gray-200 px-4 text-sm font-semibold text-ink-900">
                         <span x-text="menuOpen ? 'Close menu' : 'Menu'"></span>
                     </button>
                 </header>
                 <nav id="admin-mobile-menu" x-show="menuOpen" x-cloak class="space-y-1 border-t border-gray-100 px-4 py-3">
                     @foreach ($navItems as $item)
-                        <a href="{{ route($item['route']) }}" class="block rounded-lg px-3 py-2 text-sm font-medium {{ request()->routeIs($item['match']) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">
+                        <a href="{{ route($item['route']) }}" class="block rounded-lg px-3 py-3 text-sm font-medium {{ request()->routeIs($item['match']) ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-50' }}">
                             {{ $item['label'] }}
                         </a>
                     @endforeach
-                    <a href="{{ route('dashboard') }}" class="block rounded-lg px-3 py-2 text-sm font-medium text-gray-700">My Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="block rounded-lg px-3 py-3 text-sm font-medium text-gray-700">My Dashboard</a>
                     <form method="POST" action="{{ route('logout') }}" class="pt-2">
                         @csrf
-                        <button type="submit" class="w-full rounded-lg border border-gray-200 px-3 py-2 text-left text-sm font-semibold text-gray-700">Log out</button>
+                        <button type="submit" class="w-full rounded-lg border border-gray-200 px-3 py-3 text-left text-sm font-semibold text-gray-700">Log out</button>
                     </form>
                 </nav>
             </div>
 
-            <main class="admin-main p-6 lg:p-10">
+            <main class="admin-main p-4 sm:p-6 lg:p-10">
                 @if (session('status'))
                     <div class="mb-6 rounded-lg bg-forest-50 p-4 text-sm text-forest-700">{{ session('status') }}</div>
                 @endif

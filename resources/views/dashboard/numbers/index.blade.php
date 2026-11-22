@@ -3,9 +3,9 @@
 @section('title', 'Virtual Numbers — NEXER PROX')
 
 @section('content')
-<div class="flex items-center justify-between">
+<div class="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
     <h1 class="text-2xl font-bold text-ink-900">Virtual Numbers</h1>
-    <a href="{{ route('dashboard.numbers.buy') }}" class="btn-primary">Get a Number</a>
+    <a href="{{ route('dashboard.numbers.buy') }}" class="btn-primary shrink-0">Get a Number</a>
 </div>
 
 <section class="inventory-section mt-6">

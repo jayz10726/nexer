@@ -65,12 +65,12 @@
 
     <div class="mt-4 overflow-hidden rounded-xl border border-gray-100 bg-white">
         @forelse ($recentTransactions as $transaction)
-            <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4 last:border-0">
-                <div>
-                    <p class="text-sm font-medium text-ink-900">{{ $transaction->description ?? ucfirst($transaction->type) }}</p>
+            <div class="flex items-center justify-between gap-4 border-b border-gray-100 px-5 py-4 last:border-0">
+                <div class="min-w-0">
+                    <p class="break-words text-sm font-medium text-ink-900">{{ $transaction->description ?? ucfirst($transaction->type) }}</p>
                     <p class="text-xs text-gray-500">{{ $transaction->created_at->format('M j, Y · g:i A') }}</p>
                 </div>
-                <span class="text-sm font-semibold {{ in_array($transaction->type, ['topup', 'bonus']) ? 'text-forest-600' : 'text-gray-700' }}">
+                <span class="shrink-0 text-sm font-semibold {{ in_array($transaction->type, ['topup', 'bonus']) ? 'text-forest-600' : 'text-gray-700' }}">
                     {{ in_array($transaction->type, ['topup', 'bonus']) ? '+' : '-' }}${{ number_format($transaction->amount, 2) }}
                 </span>
             </div>
